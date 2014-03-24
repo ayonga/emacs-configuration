@@ -1,4 +1,0 @@
-emacs-configuration
-===================
-
-emacs-configuration
