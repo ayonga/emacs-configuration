@@ -195,7 +195,7 @@
 
 ;;; smartparens mode 
 (require 'smartparens-latex)
-(smartparens-global-mode 1)
+(smartparens-global-mode 0)
 
 ;; setup auctex
 
