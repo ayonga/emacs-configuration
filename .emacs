@@ -328,6 +328,11 @@
      (t (message (concat "No electronic version available: " base ".{pdf,ps}"))))))
 
 (global-set-key [S-f6] 'browse-paper-at-point)
+
+;; Git (Magit key bindings)
+(global-set-key (kbd "C-x g") 'magit-status)
+(global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
