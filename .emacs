@@ -37,7 +37,8 @@
 			  occidental-theme
 			  soft-stone-theme
 			  zenburn-theme
-			  sunny-day-theme)
+			  sunny-day-theme
+			  markdown-mode)
  
   "Default packages")
 
@@ -333,6 +334,20 @@
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
 
+;; Markdown main mode
+(autoload 'markdown-mode "markdown-mode"
+   "Major mode for editing Markdown files" t)
+(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+
+(add-hook 'markdown-mode-hook
+            (lambda ()
+              (when buffer-file-name
+                (add-hook 'after-save-hook
+                          'check-parens
+                          nil t))))
+                          
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
