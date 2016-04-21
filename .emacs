@@ -38,6 +38,7 @@
 			  soft-stone-theme
 			  zenburn-theme
 			  sunny-day-theme
+			  magit
 			  markdown-mode)
  
   "Default packages")
@@ -240,6 +241,14 @@
 	LaTeX-section-section
 	LaTeX-section-label))
 
+;; set XeTeX mode in TeX/LaTeX
+(add-hook 'LaTeX-mode-hook 
+          (lambda()
+             (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t))
+             (setq TeX-command-default "XeLaTeX")
+             (setq TeX-save-query nil)
+             (setq TeX-show-compilation t)))
+
 ;; syctex
 (setq TeX-source-correlate-method 'synctex)
 (custom-set-variables
@@ -248,6 +257,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(LaTeX-command "latex -synctex=1")
+ '(org-export-backends (quote (ascii beamer html icalendar latex md)))
+ '(safe-local-variable-values (quote ((Tex-engine . XeLaTex))))
  '(send-mail-function nil))
 
 
