@@ -278,7 +278,7 @@
   (require 'predictive)
 (setq completion-use-hotkeys pop-up-frames)
 
-(add-hook 'LaTeX-mode-hook 'turn-on-predictive-mode)
+;(add-hook 'LaTeX-mode-hook 'turn-on-predictive-mode)
 ;(add-hook 'LaTeX-mode-hook 'turn-on-cdlatex) ;;turn on cdlatex
 
 (require 'ac-math)
@@ -359,6 +359,12 @@
                           'check-parens
                           nil t))))
                           
+                          
+(global-set-key [s-left] 'windmove-left) 
+(global-set-key [s-right] 'windmove-right) 
+(global-set-key [s-up] 'windmove-up) 
+(global-set-key [s-down] 'windmove-down)
+(global-visual-line-mode t)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
