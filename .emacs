@@ -211,7 +211,14 @@
 (setq TeX-parse-self t)
 
 (setq-default TeX-master nil)
-
+;; Only parse LaTeX class and package information.
+(setq-default TeX-auto-regexp-list 'LaTeX-auto-full-regexp-list)
+;; The class and package information is usually near the beginning.
+(setq-default TeX-auto-parse-length 999999)
+;; automatic customizatoin
+(setq TeX-macro-global '("/usr/local/texlive/2015/texmf-dist/tex/"))
+(setq TeX-macro-private '("/home/ayonga/texmf/tex/"))
+(setq TeX-auto-local '("auto/")) ; set path for parsed stuff
 ;; use pdflatex
 (add-hook 'LaTeX-mode-hook 'server-start)
 (setq TeX-PDF-mode t)
@@ -247,11 +254,11 @@
 	LaTeX-section-section
 	LaTeX-section-label))
 (setq reftex-bibliography-commands '("bibliography" "nobibliography" "addbibresource"))
-(setq reftex-default-bibliography '("~/Dropbox/bibliography/ayonga.bib"
-				    "~/Dropbox/bibliography/hzd.bib"
-				    "~/Dropbox/bibliography/optimization.bib"
-				    "~/Dropbox/bibliography/control.bib"
-				    "~/Dropbox/bibliography/robotics.bib"))
+(setq reftex-default-bibliography '("/home/ayonga/Dropbox/bibliography/ayonga.bib"
+				    "/home/ayonga//Dropbox/bibliography/hzd.bib"
+				    "/home/ayonga//Dropbox/bibliography/optimization.bib"
+				    "/home/ayonga//Dropbox/bibliography/control.bib"
+				    "/home/ayonga//Dropbox/bibliography/robotics.bib"))
 ;; set XeTeX mode in TeX/LaTeX
 (add-hook 'LaTeX-mode-hook 
           (lambda()
