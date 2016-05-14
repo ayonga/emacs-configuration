@@ -79,6 +79,10 @@
 
 (when window-system
   (setq frame-title-format '(buffer-file-name "%f" ("%b"))))
+(global-set-key [s-left] 'windmove-left) 
+(global-set-key [s-right] 'windmove-right) 
+(global-set-key [s-up] 'windmove-up) 
+(global-set-key [s-down] 'windmove-down)
 
 (setq-default indicate-empty-lines t)
 (when (not indicate-empty-lines)
@@ -221,36 +225,46 @@
 
 ;; reftex
 
-;; (add-hook 'latex-mode-hook 'turn-on-reftex)
+(add-hook 'latex-mode-hook 'turn-on-reftex)
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-;(setq reftex-plug-into-auctex t)
+(setq reftex-plug-into-auctex t)
 (setq LaTeX-eqnarray-label "eq:"
       LaTeX-amsmath-label "eq:"
       LaTeX-equation-label "eq:"
+      LaTex-align-label "eq:"
       LaTeX-figure-label "fig:"
       LaTeX-table-label "tab:"
-      Latex-section-label "sec:"
+      LaTex-section-label "sec:"
+      LaTex-subsection-label "sec:"
       LaTeX-myChapter-label "chap:"
       TeX-newline-function 'reindent-then-newline-and-indent
       TeX-style-path
-      '("style/")
+      '("styles/")
       LaTeX-section-hook
       '(LaTeX-section-heading
 	LaTeX-section-title
 	LaTeX-section-toc
 	LaTeX-section-section
 	LaTeX-section-label))
-
+(setq reftex-bibliography-commands '("bibliography" "nobibliography" "addbibresource"))
+(setq reftex-default-bibliography '("~/Dropbox/bibliography/ayonga.bib"
+				    "~/Dropbox/bibliography/hzd.bib"
+				    "~/Dropbox/bibliography/optimization.bib"
+				    "~/Dropbox/bibliography/control.bib"
+				    "~/Dropbox/bibliography/robotics.bib"))
 ;; set XeTeX mode in TeX/LaTeX
 (add-hook 'LaTeX-mode-hook 
           (lambda()
              (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t))
-             (setq TeX-command-default "XeLaTeX")
+             (setq TeX-command-default "LaTeX")
              (setq TeX-save-query nil)
              (setq TeX-show-compilation t)))
 
 ;; syctex
 (setq TeX-source-correlate-method 'synctex)
+(setq TeX-source-correlate-mode t)
+(setq TeX-source-correlate-start-server t)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -263,7 +277,7 @@
 
 
 (setq TeX-view-program-selection
-      '((output-pdf "PDF Viewer")))
+      '((output-pdf "Okular")))
 (setq TeX-view-program-list
       '(("PDF Viewer" "okular --unique %o#src:%n%b")))
 
@@ -307,7 +321,7 @@
 	           cite
 	         (concat "~" cite)))))
 ;; Change this to the place where you store all the electronic versions.
-(defvar bibtex-papers-directory "~/Dropbox/references/pdf/")
+(defvar bibtex-papers-directory "~/Dropbox/bibliography/ayonga_files/")
 
 ;; Translates a BibTeX key into the base filename of the corresponding
 ;; file. Change to suit your conventions.
@@ -358,12 +372,7 @@
                 (add-hook 'after-save-hook
                           'check-parens
                           nil t))))
-                          
-                          
-(global-set-key [s-left] 'windmove-left) 
-(global-set-key [s-right] 'windmove-right) 
-(global-set-key [s-up] 'windmove-up) 
-(global-set-key [s-down] 'windmove-down)
+
 (global-visual-line-mode t)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
