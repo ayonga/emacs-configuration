@@ -20,10 +20,12 @@
 			  auctex
 			  smex
 			  org
+			  rst
 			  smartparens
                           auto-complete-auctex
                           yaml-mode
 			  flx-ido
+			  ido-vertical-mode
 			  ido-ubiquitous
 			  undo-tree
 			  diminish
@@ -37,12 +39,18 @@
 			  occidental-theme
 			  soft-stone-theme
 			  zenburn-theme
+			  sublime-themes
 			  sunny-day-theme
+			  monokai-theme
+			  molokai-theme
+			  spacegray-theme
+			  flatland-theme
 			  magit
 			  markdown-mode)
- 
   "Default packages")
-
+(add-to-list 'default-frame-alist
+             '(font . "Monospace-10"))
+(define-key global-map (kbd "C-x C-x") nil)
 
 ;;; Install default packages
 
@@ -121,12 +129,13 @@
 (require 'ido-ubiquitous)
 (require 'flx-ido)
 
+;(setq ido-save-directory-list-file (expand-file-name "ido.hist" user-emacs-directory))
+
 (setq ido-enable-prefix nil
       ido-enable-flex-matching t
       ido-create-new-buffer 'always
       ido-use-filename-at-point 'guess
       ido-max-prospects 10
-      ido-save-directory-list-file (expand-file-name "ido.hist" user-emacs-directory)
       ido-default-file-method 'selected-window
       ido-auto-merge-work-directories-length -1)
 (ido-mode +1)
@@ -136,7 +145,13 @@
 (flx-ido-mode +1)
 ;; disable ido faces to see flx highlights
 (setq ido-use-faces nil)
-
+;; flx-ido looks better with ido-vertical-mode
+(require 'ido-vertical-mode)
+(ido-vertical-mode)
+;; C-n/p is more intuitive in vertical layout
+(setq ido-vertical-define-keys 'C-n-C-p-up-down-left-right)
+(setq ido-virtual-buffers '())
+(setq recentf-list '())
 ;;; smex, remember recently and most frequently used commands
 (require 'smex)
 (setq smex-save-file (expand-file-name ".smex-items" user-emacs-directory))
@@ -144,9 +159,9 @@
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 ;; ido-mode, navigating file systems
-(ido-mode t)
-(setq ido-enable-flex-matching t
-      ido-use-virtual-buffers t)
+;(ido-mode t)
+;(setq ido-enable-flex-matching t
+;      ido-use-virtual-buffers t)
 
 ;; editor options
 ;; disable annoying blink-matching-paren
@@ -218,7 +233,6 @@
 ;; automatic customizatoin
 (setq TeX-macro-global '("/usr/local/texlive/2015/texmf-dist/tex/"))
 (setq TeX-macro-private '("/home/ayonga/texmf/tex/"))
-(setq TeX-auto-local '("auto/")) ; set path for parsed stuff
 ;; use pdflatex
 (add-hook 'LaTeX-mode-hook 'server-start)
 (setq TeX-PDF-mode t)
@@ -265,7 +279,7 @@
              (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t))
              (setq TeX-command-default "LaTeX")
              (setq TeX-save-query nil)
-             (setq TeX-show-compilation t)))
+             (setq TeX-show-compilation nil)))
 
 ;; syctex
 (setq TeX-source-correlate-method 'synctex)
@@ -278,8 +292,21 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(LaTeX-command "latex -synctex=1")
+ '(custom-safe-themes
+   (quote
+    ("40f6a7af0dfad67c0d4df2a1dd86175436d79fc69ea61614d668a635c2cd94ab" "9b59e147dbbde5e638ea1cde5ec0a358d5f269d27bd2b893a0947c4a867e14c1" "4af6fad34321a1ce23d8ab3486c662de122e8c6c1de97baed3aa4c10fe55e060" "b571f92c9bfaf4a28cb64ae4b4cdbda95241cd62cf07d942be44dc8f46c491f4" "a2e7b508533d46b701ad3b055e7c708323fb110b6676a8be458a758dd8f24e27" "d8f76414f8f2dcb045a37eb155bfaa2e1d17b6573ed43fb1d18b936febc7bbc2" "6df30cfb75df80e5808ac1557d5cc728746c8dbc9bc726de35b15180fa6e0ad9" "e9776d12e4ccb722a2a732c6e80423331bcb93f02e089ba2a4b02e85de1cf00e" default)))
+ '(nrepl-message-colors
+   (quote
+    ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(org-export-backends (quote (ascii beamer html icalendar latex md)))
- '(safe-local-variable-values (quote ((Tex-engine . XeLaTex))))
+ '(safe-local-variable-values
+   (quote
+    ((TeX-auto-regexp-list . LaTeX-auto-regexp-list)
+     (TeX-auto-untabify)
+     (TeX-auto-save)
+     (TeX-parse-self)
+     (TeX-brace-indent-level . 4)
+     (Tex-engine . XeLaTex))))
  '(send-mail-function nil))
 
 
