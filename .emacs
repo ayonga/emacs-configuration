@@ -77,7 +77,7 @@
 
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
-(menu-bar-mode -1)
+(menu-bar-mode 1)
 (blink-cursor-mode -1)
 (setq-default cursor-type 'bar)
 
@@ -152,6 +152,7 @@
 (setq ido-vertical-define-keys 'C-n-C-p-up-down-left-right)
 (setq ido-virtual-buffers '())
 (setq recentf-list '())
+(setq ido-ignore-buffers '("\\` " "^\*"))
 ;;; smex, remember recently and most frequently used commands
 (require 'smex)
 (setq smex-save-file (expand-file-name ".smex-items" user-emacs-directory))
@@ -224,15 +225,14 @@
 ;; AUCTeX configuration
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
-
 (setq-default TeX-master nil)
 ;; Only parse LaTeX class and package information.
-(setq-default TeX-auto-regexp-list 'LaTeX-auto-full-regexp-list)
+;; (setq-default TeX-auto-regexp-list 'LaTeX-auto-full-regexp-list)
 ;; The class and package information is usually near the beginning.
-(setq-default TeX-auto-parse-length 999999)
+;; (setq-default TeX-auto-parse-length 999999)
 ;; automatic customizatoin
-(setq TeX-macro-global '("/usr/local/texlive/2015/texmf-dist/tex/"))
-(setq TeX-macro-private '("/home/ayonga/texmf/tex/"))
+;;(setq TeX-macro-global '("/usr/local/texlive/2015/texmf-dist/tex/"))
+;;(setq TeX-macro-private '("/home/ayonga/texmf/tex/"))
 ;; use pdflatex
 (add-hook 'LaTeX-mode-hook 'server-start)
 (setq TeX-PDF-mode t)
@@ -252,15 +252,14 @@
 (setq LaTeX-eqnarray-label "eq:"
       LaTeX-amsmath-label "eq:"
       LaTeX-equation-label "eq:"
-      LaTex-align-label "eq:"
+      LaTeX-align-label "eq:"
       LaTeX-figure-label "fig:"
       LaTeX-table-label "tab:"
-      LaTex-section-label "sec:"
-      LaTex-subsection-label "sec:"
+      LaTeX-section-label "sec:"
+      LaTeX-subsection-label "sec:"
       LaTeX-myChapter-label "chap:"
+      LaTeX-chapter-label "chap:"
       TeX-newline-function 'reindent-then-newline-and-indent
-      TeX-style-path
-      '("styles/")
       LaTeX-section-hook
       '(LaTeX-section-heading
 	LaTeX-section-title
@@ -273,6 +272,32 @@
 				    "/home/ayonga//Dropbox/bibliography/optimization.bib"
 				    "/home/ayonga//Dropbox/bibliography/control.bib"
 				    "/home/ayonga//Dropbox/bibliography/robotics.bib"))
+	
+(setq reftex-label-alist '(AMSTeX))
+(setq reftex-label-alist '((nil ?f nil "~\\figref{%s}" nil nil)))
+(setq reftex-label-alist '((nil ?t nil "~\\tabref{%s}" nil nil)))
+(setq reftex-label-alist '((nil ?s nil "~\\secref{%s}" nil nil)))
+
+;;(add-to-list 'LaTeX-label-alist '("theorem" . "thm:"))
+(add-to-list 'reftex-label-alist
+	       '("theorem" ?h "thm:" "~\\thmref{%s}"
+		 nil ("Theorem" "thm") nil))
+(add-to-list 'reftex-label-alist
+	       '("lemma" ?l "lem:" "~\\lemref{%s}"
+		 nil ("Lemma" "lem") nil))
+(add-to-list 'reftex-label-alist
+	       '("definition" ?d "defn:" "~\\defnref{%s}"
+		 nil ("Definition" "defn") nil))
+(add-to-list 'reftex-label-alist
+	       '("corollary" ?c "cor:" "~\\corref{%s}"
+		 nil ("Corollary" "cor") nil))
+(add-to-list 'reftex-label-alist
+	       '("example" ?x "ex:" "~\\exref{%s}"
+		 nil ("Example" "ex") nil))
+(add-to-list 'reftex-label-alist
+	       '("proposition" ?p "prop:" "~\\propref{%s}"
+		 nil ("Proposition" "prop") nil))
+;;(setq reftex-label-alist '((nil ?e nil "~\\eqref{%s}" nil nil)))
 ;; set XeTeX mode in TeX/LaTeX
 (add-hook 'LaTeX-mode-hook 
           (lambda()
@@ -295,6 +320,7 @@
  '(custom-safe-themes
    (quote
     ("40f6a7af0dfad67c0d4df2a1dd86175436d79fc69ea61614d668a635c2cd94ab" "9b59e147dbbde5e638ea1cde5ec0a358d5f269d27bd2b893a0947c4a867e14c1" "4af6fad34321a1ce23d8ab3486c662de122e8c6c1de97baed3aa4c10fe55e060" "b571f92c9bfaf4a28cb64ae4b4cdbda95241cd62cf07d942be44dc8f46c491f4" "a2e7b508533d46b701ad3b055e7c708323fb110b6676a8be458a758dd8f24e27" "d8f76414f8f2dcb045a37eb155bfaa2e1d17b6573ed43fb1d18b936febc7bbc2" "6df30cfb75df80e5808ac1557d5cc728746c8dbc9bc726de35b15180fa6e0ad9" "e9776d12e4ccb722a2a732c6e80423331bcb93f02e089ba2a4b02e85de1cf00e" default)))
+ '(fill-column 80)
  '(nrepl-message-colors
    (quote
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
