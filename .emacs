@@ -42,17 +42,23 @@
 			  sublime-themes
 			  sunny-day-theme
 			  monokai-theme
+			  twilight-bright-theme
 			  molokai-theme
 			  spacegray-theme
+			  soft-morning-theme
+			  color-theme-modern
 			  flatland-theme
 			  magit
-			  markdown-mode)
+			  markdown-mode
+			  ebib)
   "Default packages")
 (add-to-list 'default-frame-alist
              '(font . "Monospace-10"))
 (define-key global-map (kbd "C-x C-x") nil)
 
 ;;; Install default packages
+
+
 
 (defun ayonga/packages-installed-p ()
   (loop for pkg in ayonga/packages
@@ -69,6 +75,12 @@
 ;;; start-up options
 (setq inhibit-splash-screen t
       initial-scratch-message nil)
+
+;; color theme
+(load-theme 'gtk-ide t)
+
+;; ebib
+(global-set-key "\C-ce" 'ebib)
 
 ;; nice scrolling
 (setq scroll-margin 0
@@ -121,8 +133,7 @@
 (require 'windmove)
 (windmove-default-keybindings)
 
-;; color theme
-(load-theme 'zenburn t)
+
 
 ;; smex
 (require 'ido)
