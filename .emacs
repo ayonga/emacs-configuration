@@ -316,7 +316,27 @@
              (setq TeX-command-default "LaTeX")
              (setq TeX-save-query nil)
              (setq TeX-show-compilation nil)))
-
+;;(eval-after-load "tex"
+;;  '(add-to-list 'TeX-command-list 
+;;                '("Losa" "bibtex %s.losa"
+;;                  (lambda (name command file)
+;;                    (TeX-run-compile name command file)
+;;                    (TeX-process-set-variable file 'TeX-command-BibTex TeX-command-BibTex))
+;;                  nil t :help "Create losa file")))
+;;(eval-after-load "tex"
+;;  '(add-to-list 'TeX-command-list 
+;;               '("Gloss" "bibtex %s.gls"
+;;                  (lambda (name command file)
+;;                    (TeX-run-compile name command file)
+;;                    (TeX-process-set-variable file 'TeX-command-BibTex TeX-command-BibTex))
+;;                  nil t :help "Create gloss file")))
+(eval-after-load "tex"
+  '(add-to-list 'TeX-command-list 
+                '("Glossary" "makeindex -s %s.ist -o %s.gls %s.glo"
+                  (lambda (name command file)
+                    (TeX-run-compile name command file)
+                    (TeX-process-set-variable file 'TeX-command-next TeX-command-default))
+                  nil t :help "Create Glossary")))
 ;; syctex
 (setq TeX-source-correlate-method 'synctex)
 (setq TeX-source-correlate-mode t)
@@ -327,7 +347,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(LaTeX-command "latex -synctex=1")
  '(custom-safe-themes
    (quote
     ("40f6a7af0dfad67c0d4df2a1dd86175436d79fc69ea61614d668a635c2cd94ab" "9b59e147dbbde5e638ea1cde5ec0a358d5f269d27bd2b893a0947c4a867e14c1" "4af6fad34321a1ce23d8ab3486c662de122e8c6c1de97baed3aa4c10fe55e060" "b571f92c9bfaf4a28cb64ae4b4cdbda95241cd62cf07d942be44dc8f46c491f4" "a2e7b508533d46b701ad3b055e7c708323fb110b6676a8be458a758dd8f24e27" "d8f76414f8f2dcb045a37eb155bfaa2e1d17b6573ed43fb1d18b936febc7bbc2" "6df30cfb75df80e5808ac1557d5cc728746c8dbc9bc726de35b15180fa6e0ad9" "e9776d12e4ccb722a2a732c6e80423331bcb93f02e089ba2a4b02e85de1cf00e" default)))
