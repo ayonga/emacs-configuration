@@ -50,13 +50,17 @@
 			  flatland-theme
 			  magit
 			  markdown-mode
-			  ebib)
+			  apropospriate-theme
+			  ebib
+			  yasnippet
+			  dropdown-list)
   "Default packages")
 (add-to-list 'default-frame-alist
              '(font . "Monospace-10"))
 (define-key global-map (kbd "C-x C-x") nil)
 
 ;;; Install default packages
+
 
 
 
@@ -77,7 +81,11 @@
       initial-scratch-message nil)
 
 ;; color theme
-(load-theme 'gtk-ide t)
+(require 'apropospriate)
+(load-theme 'apropospriate-dark t)
+;; or
+;(load-theme 'apropospriate-light t)
+;(load-theme 'gtk-ide t)
 
 ;; ebib
 (global-set-key "\C-ce" 'ebib)
@@ -87,8 +95,8 @@
       scroll-conservatively 100000
       scroll-preserve-screen-position 1)
 
-(scroll-bar-mode -1)
-(tool-bar-mode -1)
+(scroll-bar-mode 1)
+(tool-bar-mode 1)
 (menu-bar-mode 1)
 (blink-cursor-mode -1)
 (setq-default cursor-type 'bar)
@@ -134,7 +142,14 @@
 (windmove-default-keybindings)
 
 
+(yas-global-mode t)
+(define-key yas-minor-mode-map (kbd "C-c <SPC>") 'yas-expand)
+(setq ac-source-yasnippet nil);; must
 
+(require 'dropdown-list)
+(setq yas-prompt-functions '(yas-dropdown-prompt
+			     yas-ido-prompt
+			     yas-completing-prompt))
 ;; smex
 (require 'ido)
 (require 'ido-ubiquitous)
@@ -278,16 +293,20 @@
 	LaTeX-section-section
 	LaTeX-section-label))
 (setq reftex-bibliography-commands '("bibliography" "nobibliography" "addbibresource"))
-(setq reftex-default-bibliography '("/home/ayonga/Dropbox/bibliography/ayonga.bib"
-				    "/home/ayonga//Dropbox/bibliography/hzd.bib"
-				    "/home/ayonga//Dropbox/bibliography/optimization.bib"
-				    "/home/ayonga//Dropbox/bibliography/control.bib"
-				    "/home/ayonga//Dropbox/bibliography/robotics.bib"))
+(setq reftex-default-bibliography '("/home/ayonga/Papers/bibliography/ayonga.bib"
+				    "/home/ayonga/Papers/bibliography/hzd.bib"
+				    "/home/ayonga/Papers/bibliography/optimization.bib"
+				    "/home/ayonga/Papers/bibliography/control.bib"
+				    "/home/ayonga/Papers/bibliography/robotics.bib"))
 	
 (setq reftex-label-alist '(AMSTeX))
 (setq reftex-label-alist '((nil ?f nil "~\\figref{%s}" nil nil)))
 (setq reftex-label-alist '((nil ?t nil "~\\tabref{%s}" nil nil)))
 (setq reftex-label-alist '((nil ?s nil "~\\secref{%s}" nil nil)))
+
+
+
+
 
 ;;(add-to-list 'LaTeX-label-alist '("theorem" . "thm:"))
 (add-to-list 'reftex-label-alist
@@ -391,7 +410,9 @@
 (defun ac-latex-mode-setup ()         ; add ac-sources to default ac-sources
   (setq ac-sources
      (append '(ac-source-math-unicode ac-source-math-latex ac-source-latex-commands)
-               ac-sources)))
+	     ac-sources)))
+
+
 
 (add-hook 'Latex-mode-hook 'ac-latex-mode-setup)
 
@@ -411,7 +432,7 @@
 	           cite
 	         (concat "~" cite)))))
 ;; Change this to the place where you store all the electronic versions.
-(defvar bibtex-papers-directory "~/Dropbox/bibliography/ayonga_files/")
+(defvar bibtex-papers-directory "/home/ayonga/Papers/bibliography/pdf/")
 
 ;; Translates a BibTeX key into the base filename of the corresponding
 ;; file. Change to suit your conventions.
@@ -449,6 +470,16 @@
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
 
+(add-to-list 'load-path "/home/ayonga/.emacs.d/plugins")
+(require 'magic-latex-buffer)
+(add-hook 'Latex-mode-hook 'magic-latex-buffer)
+(add-hook 'latex-mode-hook 'magic-latex-buffer)
+;(setq magic-latex-enable-block-highlight t
+;      magic-latex-enable-suscript        t
+;      magic-latex-enable-pretty-symbols  t
+;      magic-latex-enable-block-align     t
+;      magic-latex-enable-inline-image    t
+;      magic-latex-enable-minibuffer-echo t)
 ;; Markdown main mode
 (autoload 'markdown-mode "markdown-mode"
    "Major mode for editing Markdown files" t)
